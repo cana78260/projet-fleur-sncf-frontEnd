@@ -1,4 +1,5 @@
 import './App.css';
+import NavBar from './components/NavBar';
 
 const App = () => {
   const message: string = 'Hello World';
@@ -8,9 +9,13 @@ const App = () => {
 
   return (
     <div>
+      {/* On utilise notre composant dans notre JSX */}
+      <NavBar />
       <p className='color-pink'>{message}</p>
       {/* Liaison de l'évènement click avec l'appel de la fonction handleClick avec paramètre */}
-      <button onClick={() => handleClick('Joseph')}>Test Joseph</button>
+      <button className='btn btn-success' onClick={() => handleClick('Joseph')}>
+        Test Joseph
+      </button>
       <button onClick={() => handleClick('Coco')}>Test Coco</button>
       <p>Coucou</p>
       {/* Liaison de l'évènement click avec l'appel de la fonction handleClickSansParam sans paramètre */}
