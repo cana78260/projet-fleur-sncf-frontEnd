@@ -1,9 +1,11 @@
-import { list_products } from '../data';
-import SideBar from '../components/SideBar';
-import { useState } from 'react';
+import SideBar from "../components/SideBar";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+
 
 export interface Plante {
-  id: string;
+  id: number;
   name: string;
   unitprice_ati: number;
   quantity: number;
@@ -15,16 +17,23 @@ export interface Plante {
 /**
  * Ici les constantes ou variables dont la modification de valeur ne provoquera pas directement de re-render
  */
-const listePlantes: Plante[] = list_products;
+let listePlantes: Plante[] = [];
 let checkedCateg: string[] = [];
 
 const Home = () => {
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
   ]);
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/plantes").then((Response) => {
+      listePlantes = Response.data.data;
+      setListPlantDisplayed(listePlantes);
+      console.log(listePlantes);
+    });
+  }, []);
 
   const handleCheckCategories = (mesCategoriesChecked: string[]) => {
-    console.log('categories checked', mesCategoriesChecked);
+    console.log("categories checked", mesCategoriesChecked);
     /**
      * Filtrer nos données ici
      */
@@ -43,18 +52,38 @@ const Home = () => {
   };
 
   return (
-    <div className='d-flex align-items-stretch'>
+    <div className="d-flex align-items-stretch">
       <SideBar
         listElementPlant={listePlantes}
         onChangeCategoriesCheck={handleCheckCategories}
       />
-      <div className='container-fluid custom-main'>
+      <div className="container-fluid custom-main" style={{ display: "flex", flexWrap: "wrap"}}>
+
         {listPlantDisplayed.map((plante, i) => (
           <li key={i}>
+            <div className="card" style={{ width: "18rem" }}/>
+              <img
+                src={`http://localhost:8080/assets/${plante.url_picture}`}
+                className="card-img-top"
+                alt="photo"
+                style={{ width: "10rem" }}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{plante.name}</h5>
+                <p className="card-text">
+                  {plante.category} - 💵 {plante.unitprice_ati}€ - ⭐
+                  {plante.rating}
+                </p>
+                <div className="btn btn-primary">
+                  Buy
+                </div>
+              </div>
+            
+            {/* {plante.url_picture}
             {plante.name} - {plante.category} - 💵 {plante.unitprice_ati}€ - ⭐
-            {plante.rating}
+            {plante.rating} */}
           </li>
-        ))}{' '}
+        ))}{" "}
       </div>
     </div>
   );
