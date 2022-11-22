@@ -1,6 +1,7 @@
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Card from "../components/Card";
 
 
 
@@ -57,11 +58,14 @@ const Home = () => {
         listElementPlant={listePlantes}
         onChangeCategoriesCheck={handleCheckCategories}
       />
-      <div className="container-fluid custom-main" style={{ display: "flex", flexWrap: "wrap"}}>
-
-        {listPlantDisplayed.map((plante, i) => (
+      <div
+        className="container-fluid custom-main"
+        style={{ display: "flex", flexWrap: "wrap" }}
+      >
+        {listPlantDisplayed.map((dataPlante, i) => (
           <li key={i}>
-            <div className="card" style={{ width: "18rem" }}/>
+            <Card plante={dataPlante} />
+            {/* <div className="card" style={{ width: "18rem" }}/>
               <img
                 src={`http://localhost:8080/assets/${plante.url_picture}`}
                 className="card-img-top"
@@ -77,8 +81,8 @@ const Home = () => {
                 <div className="btn btn-primary">
                   Buy
                 </div>
-              </div>
-            
+              </div> */}
+
             {/* {plante.url_picture}
             {plante.name} - {plante.category} - 💵 {plante.unitprice_ati}€ - ⭐
             {plante.rating} */}

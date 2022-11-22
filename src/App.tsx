@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import Connexion from "./pages/Connexion";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         {/* On utilise notre composant dans notre JSX */}
         <NavBar />
         <Routes>
+          <Route path="/connexion" element={<Connexion/>} />
           <Route path="/" element={<Home />} />
           <Route path="/details" element={<Details />} />
         </Routes>
